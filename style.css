@@ -1,0 +1,24 @@
+#calculator {
+    display: grid;
+    box-shadow: 0 0 10px rgb(14, 9, 9);
+    width: fit-content;
+}
+
+#screen {
+    width: 560px;
+    height: 250px;
+    border: 1px solid;
+}
+
+#buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid black;
+    width: 560px;
+    height: 600px;
+}
+
+#buttons button {
+    font-size: 100px;
+    border: 1px solid;
+}
