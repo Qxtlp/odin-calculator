@@ -108,6 +108,7 @@ function operate(a, b, type, check) {
     }
 }
 
+
 function changeClass(params) {
     buttons.forEach(button => {
         if (params) {
@@ -116,4 +117,29 @@ function changeClass(params) {
             button.className = "input2";
         }
     });
+}
+
+function clearScreen() {
+    console.log("cleared");
+    firstNumber = "";
+    secondNumber = "";
+    operator = "";
+    display1.textContent = 0;
+    display2.textContent = "";
+    display3.textContent = "";
+    changeClass(true);
+}
+
+
+function deleteNumber() {
+    let active = buttons[0].classList;
+    console.log(active);
+    if (active == "input1") {
+        firstNumber = firstNumber.slice(0, -1);
+        display1.textContent = firstNumber;
+    } else {
+        secondNumber = secondNumber.slice(0, -1);
+        display1.textContent = secondNumber;
+        console.log(secondNumber);
+    }
 }
