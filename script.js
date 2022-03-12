@@ -40,6 +40,7 @@ let firstNumber = "";
 function displayNumber(input) {
     firstNumber += input;
     display1.textContent = firstNumber;
+    console.log("display1");
 }
 
 let secondNumber = "";
@@ -48,6 +49,7 @@ function displayNumber2(input) {
     display2.textContent = firstNumber;
     secondNumber += input;
     display1.textContent = secondNumber;
+    console.log("display2");
 }
 
 function setOperator(input) {
@@ -99,10 +101,11 @@ function operate(a, b, type, check) {
         display3.textContent = operator;
         display1.textContent = result;
     } else {
+        console.log("not =");
         display2.textContent = `${result}`;
         secondNumber = "";
+        firstNumber = result;
     }
-    changeClass(true);
 }
 
 function changeClass(params) {
