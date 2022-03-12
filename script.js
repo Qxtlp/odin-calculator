@@ -30,6 +30,7 @@ function checkInput(input, param) {
             setOperator(input);
         } else {
             operate(parseFloat(firstNumber), parseFloat(secondNumber), operator, false);
+            setOperator(input);
             console.log("wee");
         }
     }
