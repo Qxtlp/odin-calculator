@@ -9,7 +9,7 @@ let multiply = (a, b) => a * b;
 let divide = (a, b) => a / b;
 
 buttons.forEach(button => {
-    button.className = "input1";
+    changeClass(true);
     button.addEventListener("click", () => {
         checkInput(button.value, button.className);
     });
@@ -18,14 +18,20 @@ buttons.forEach(button => {
 let operator = "";
 
 function checkInput(input, param) {
-    if (input <= 9 && param == "input1") {
+    if ((input <= 9 || input == ".") && param == "input1") {
         displayNumber(input);
-    } else if (input <= 9 && param == "input2") {
+    } else if ((input <= 9 || input == ".") && param == "input2") {
         displayNumber2(input);
     } else if (input == "=") {
-        console.log(operate(parseFloat(firstNumber), parseFloat(secondNumber), operator));
+        operate(parseFloat(firstNumber), parseFloat(secondNumber), operator, true);
     } else {
-        setOperator(input);
+        if (secondNumber == "") {
+            console.log("woo");
+            setOperator(input);
+        } else {
+            operate(parseFloat(firstNumber), parseFloat(secondNumber), operator, false);
+            console.log("wee");
+        }
     }
 }
 
@@ -45,10 +51,9 @@ function displayNumber2(input) {
 }
 
 function setOperator(input) {
-    buttons.forEach(button => {
-        button.className = "input2";
-    });
+    changeClass(false);
     display3.textContent = input;
+    display2.textContent = firstNumber;
     switch (input) {
         case "+":
             operator = "+";
@@ -68,7 +73,7 @@ function setOperator(input) {
     }
 }
 
-function operate(a, b, type) {
+function operate(a, b, type, check) {
     let result = 0;
     switch (type) {
         case "+":
@@ -84,9 +89,28 @@ function operate(a, b, type) {
             result = divide(a, b);
             break;
 
-
         default:
             break;
     }
-    display1.textContent = result;
+    if (check) {
+        display2.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+        operator = "=";
+        firstNumber = "";
+        display3.textContent = operator;
+        display1.textContent = result;
+    } else {
+        display2.textContent = `${result}`;
+        secondNumber = "";
+    }
+    changeClass(true);
+}
+
+function changeClass(params) {
+    buttons.forEach(button => {
+        if (params) {
+            button.className = "input1";
+        } else {
+            button.className = "input2";
+        }
+    });
 }
