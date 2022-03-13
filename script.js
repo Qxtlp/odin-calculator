@@ -16,22 +16,25 @@ buttons.forEach(button => {
 });
 
 let operator = "";
+let hasResult = false;
 
 function checkInput(input, param) {
+    const a = parseFloat(firstNumber);
+    const b = parseFloat(secondNumber);
     if ((input <= 9 || input == ".") && param == "input1") {
         displayNumber(input);
     } else if ((input <= 9 || input == ".") && param == "input2") {
-        displayNumber2(input);
+        displayNumber2(input, hasResult);
     } else if (input == "=") {
-        operate(parseFloat(firstNumber), parseFloat(secondNumber), operator, true);
+        if (firstNumber != "" && secondNumber != "") {
+            operate(a, b, operator, true);
+        }
     } else {
         if (secondNumber == "") {
-            console.log("woo");
             setOperator(input);
         } else {
-            operate(parseFloat(firstNumber), parseFloat(secondNumber), operator, false);
+            operate(a, b, operator, false);
             setOperator(input);
-            console.log("wee");
         }
     }
 }
@@ -41,7 +44,6 @@ let firstNumber = "";
 function displayNumber(input) {
     firstNumber += input;
     display1.textContent = firstNumber;
-    console.log("display1");
 }
 
 let secondNumber = "";
@@ -50,13 +52,11 @@ function displayNumber2(input) {
     display2.textContent = firstNumber;
     secondNumber += input;
     display1.textContent = secondNumber;
-    console.log("display2");
 }
 
 function setOperator(input) {
     changeClass(false);
     display3.textContent = input;
-    display2.textContent = firstNumber;
     switch (input) {
         case "+":
             operator = "+";
@@ -73,6 +73,12 @@ function setOperator(input) {
 
         default:
             break;
+    }
+    if (firstNumber == "") {
+        firstNumber = 0;
+        display2.textContent = firstNumber;
+    } else {
+        display2.textContent = firstNumber;
     }
 }
 
@@ -98,14 +104,20 @@ function operate(a, b, type, check) {
     if (check) {
         display2.textContent = `${firstNumber} ${operator} ${secondNumber}`;
         operator = "=";
-        firstNumber = "";
+        firstNumber = result;
+        secondNumber = result;
         display3.textContent = operator;
         display1.textContent = result;
+        hasResult = true;
     } else {
         console.log("not =");
-        display2.textContent = `${result}`;
         secondNumber = "";
-        firstNumber = result;
+        if (hasResult) {
+            display2.textContent = firstNumber;
+        } else {
+            firstNumber = result;
+            display2.textContent = result;
+        }
     }
 }
 
@@ -133,9 +145,9 @@ function clearScreen() {
 
 
 function deleteNumber() {
-    let active = buttons[0].classList;
-    console.log(active);
-    if (active == "input1") {
+    let activeClass = buttons[0].classList;
+    console.log(activeClass);
+    if (activeClass == "input1") {
         firstNumber = firstNumber.slice(0, -1);
         display1.textContent = firstNumber;
     } else {
